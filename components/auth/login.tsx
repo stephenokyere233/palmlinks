@@ -2,11 +2,13 @@ import React from "react";
 import Link from "next/link";
 import AuthLayout from "../layouts/auth.layout";
 import { FcGoogle } from "react-icons/fc";
+import { useStore } from "@/store";
 
 const Login = () => {
+  const setShowSignUp = useStore((state) => state.setShowSignUp);
   return (
     <AuthLayout>
-      <section className="space-y-4 text-xl max-w-[400px] mx-auto">
+      <section className="space-y-4 text-xl max-w-[400px] mx-auto h-full">
         <h2 className="text-2xl font-medium">Log in to your account</h2>
         <div>
           <label htmlFor="">Email</label>
@@ -31,9 +33,9 @@ const Login = () => {
 
         <div className="flex gap-2 items-center justify-center">
           <p>Not a member?</p>
-          <Link href="/" className="text-primary">
+          <button onClick={() => setShowSignUp(true)} className="text-primary">
             Create account
-          </Link>
+          </button>
         </div>
       </section>
     </AuthLayout>

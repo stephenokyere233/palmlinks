@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="min-h-screen text-zinc-700 border bg-secondary border-red-500">
+    <main className="min-h-screen text-zinc-700  bg-secondary">
       <Header />
       <Hero/>
     </main>
