@@ -8,6 +8,7 @@ import Watermark from "../watermark";
 const Preview = () => {
   const authUser = useStore((state) => state.authUser);
   const userBio = useStore((state) => state.userBio);
+  const userName = useStore((state) => state.userName);
 
   const Profile: FC<{ name: string; bio: string }> = ({ name, bio }) => {
     return (
@@ -21,7 +22,7 @@ const Preview = () => {
         />
         <div>
           <h2 className="text-2xl font-bold">{name}</h2>
-          <p className="text-xl">{bio}</p>
+          <p className="text-xl max-w-[350px] py-2 break-words">{bio}</p>
         </div>
       </div>
     );
@@ -50,11 +51,10 @@ const Preview = () => {
     <section className="border-l flex flex-col border-l-grayLight h-full px-6 pt-4 pb-6">
       <Controls />
       <div className="border mt-4 flex-1 p-4 py-6 border-grayLight rounded-lg flex flex-col items-center">
-        <Profile name={authUser?.displayName as string} bio={userBio} />
+        <Profile name={userName} bio={userBio} />
         <section className="flex-1 border w-full"></section>
         <Watermark />
       </div>
-      {/* preview */}
     </section>
   );
 };

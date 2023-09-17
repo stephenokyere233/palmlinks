@@ -4,6 +4,11 @@ import { UserCredential } from "firebase/auth";
 import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import toast from "react-hot-toast";
 
+const createUserProfile = (firebaseUser: UserCredential["user"]) => {
+  const docRef = doc(firestoreDB, `${COLLECTIONS.PROFILES}/${firebaseUser.uid}`);
+  // await setDoc(docRef, data)
+};
+
 export async function onAuthenticationSuccess(firebaseUser: UserCredential["user"]) {
   let docRef = doc(firestoreDB, `${COLLECTIONS.USERS}/${firebaseUser.uid}`);
   let docSnap = await getDoc(docRef);
@@ -18,7 +23,7 @@ export async function onAuthenticationSuccess(firebaseUser: UserCredential["user
 
     setDoc(doc(firestoreDB, `${COLLECTIONS.USERS}/${firebaseUser.uid}`), newUser)
       .then(async () => {
-        toast.success("Thank you for Joining Dappdeck!");
+        toast.success("Thank you for Joining PalmLinks!");
       })
       .catch(() => toast.error("Couldn't add user"));
   } else {

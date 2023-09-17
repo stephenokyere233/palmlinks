@@ -4,8 +4,10 @@ import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect } from "react";
 import { firebaseAuth } from "@/config/firebase.config";
 import { useStore } from "@/store";
+import { useRouter } from "next/router";
 
 const Dashboard = () => {
+  const router=useRouter()
   const setAuthUser = useStore((state) => state.setAuthUser);
   async function listenForAuthStateChange() {
     onAuthStateChanged(firebaseAuth, (user) => {
@@ -17,7 +19,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     listenForAuthStateChange();
-  }, []);
+  }, [firebaseAuth]);
+
   return (
     <DashBoardLayout>
       <Outlet />

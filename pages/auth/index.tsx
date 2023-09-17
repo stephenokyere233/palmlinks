@@ -12,12 +12,14 @@ const AuthPage = () => {
     if (showSignUp) {
       router.push("/auth", {
         query: {
+          ...router.query,
           type: "signup",
         },
       });
     } else {
       router.push("/auth", {
         query: {
+          ...router.query,
           type: "login",
         },
       });

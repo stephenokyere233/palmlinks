@@ -11,7 +11,6 @@ const User = () => {
     signOut()
       .then(() => {
         router.push("/");
-        toast.success("Logout successful")
       })
       .catch((err) => {
         console.log(err);
@@ -33,7 +32,7 @@ const User = () => {
       </div>
       <button
         onClick={logOut}
-        className="flex bg-red-100 font-semibold shadow-md justify-center text-xl items-center p-3 gap-2 rounded-lg"
+        className="flex active:scale-95 transition-all bg-red-100 hover:bg-red-200 font-semibold shadow-md justify-center text-xl items-center p-3 gap-2 rounded-lg"
       >
         <p>Logout</p>
         <BiLogOut color="red" size={24} />
