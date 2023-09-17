@@ -8,3 +8,36 @@
 *{
   font-family: 'Manrope', sans-serif;
 }
+
+.hide-scrollbar::-webkit-scrollbar {
+  width: 0.5em; /* Adjust the width as needed */
+  height: 0.5em; /* Adjust the height as needed */
+}
+
+.hide-scrollbar::-webkit-scrollbar-track {
+  background-color: transparent; /* Set the track background color */
+}
+
+.hide-scrollbar::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Set the thumb background color */
+  border-radius: 4px; /* Optionally, you can add some border-radius for the thumb */
+}
+
+.loader {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-block;
+  border-right: 3px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 

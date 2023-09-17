@@ -15,6 +15,12 @@ const AuthPage = () => {
           type: "signup",
         },
       });
+    } else {
+      router.push("/auth", {
+        query: {
+          type: "login",
+        },
+      });
     }
   }, [showSignUp]);
 
