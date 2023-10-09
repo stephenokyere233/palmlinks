@@ -1,14 +1,17 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect } from "react";
 import { BiCopy, BiShareAlt } from "react-icons/bi";
 import { AiOutlineQrcode } from "react-icons/ai";
 import Image from "next/image";
-import { useStore } from "@/store";
 import Watermark from "../watermark";
+import { useUserProfile } from "@/hooks/useUserProfile.hook";
+import { SOCIALS_TO_ADD } from "@/constants/socials";
+import { useStore } from "@/store";
 
 const Preview = () => {
-  const authUser = useStore((state) => state.authUser);
-  const userBio = useStore((state) => state.userBio);
+  const { userProfile } = useUserProfile();
+  const userLinks = useStore((state) => state.userLinks);
   const userName = useStore((state) => state.userName);
+  const userBio = useStore((state) => state.userBio);
 
   const Profile: FC<{ name: string; bio: string }> = ({ name, bio }) => {
     return (
@@ -50,9 +53,30 @@ const Preview = () => {
   return (
     <section className="border-l flex flex-col border-l-grayLight h-full px-6 pt-4 pb-6">
       <Controls />
-      <div className="border mt-4 flex-1 p-4 py-6 border-grayLight rounded-lg flex flex-col items-center">
-        <Profile name={userName} bio={userBio} />
-        <section className="flex-1 border w-full"></section>
+      <div className="border mt-4 flex-1 bg-accentLight p-4 py-6 border-grayLight rounded-lg flex flex-col items-center">
+        {userProfile && (
+          <Profile name={userName} bio={userBio} />
+        )}
+        <section className="flex-1  w-full">
+          <section className="flex flex-col gap-4 mt-6">
+            {userProfile &&
+              userLinks.map((link) => {
+                const data = SOCIALS_TO_ADD.filter(
+                  (item) => link.baseUrl === item.baseUrl
+                );
+                const icon = data[0].icon;
+                return (
+                  <button
+                    className="bg-grayLight hover:bg-primary hover:text-white transition-all active:scale-95 text-xl flex gap-6 shadow-lg p-4 rounded-lg"
+                    key={link.baseUrl}
+                  >
+                    {icon}
+                    {link.baseUrl.split("https://")[1] + link.username}
+                  </button>
+                );
+              })}
+          </section>
+        </section>
         <Watermark />
       </div>
     </section>

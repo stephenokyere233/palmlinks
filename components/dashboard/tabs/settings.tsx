@@ -1,8 +1,20 @@
-import React, { useState } from "react";
+import { firebaseAuth } from "@/config/firebase.config";
+import { useUserProfile } from "@/hooks/useUserProfile.hook";
+import React, { useEffect, useState } from "react";
 
 const Settings = () => {
   const [SEOTitle, setSEOTitle] = useState<string>("");
   const [SEODescription, setSEODescription] = useState<string>("");
+  const { userProfile, getProfile } = useUserProfile();
+
+  useEffect(() => {
+    if (!firebaseAuth.currentUser) return;
+    if (!userProfile) getProfile(firebaseAuth.currentUser.uid);
+    setSEOTitle(userProfile?.settings.SEO.title as string);
+    if (userProfile?.settings.SEO.description)
+      setSEODescription(userProfile?.settings.SEO.description);
+  }, []);
+
   return (
     <div className="w-full max-w-[800px] mx-auto h-full">
       <h1 className="font-bold text-2xl py-6 tracking-wider border-b border-grayLight">

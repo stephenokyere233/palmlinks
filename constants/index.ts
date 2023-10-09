@@ -1,6 +1,4 @@
-import { AiOutlineYoutube } from "react-icons/ai";
-import { FaXTwitter, FaInstagram } from "react-icons/fa6";
-import { BiLogoFacebook, BiLogoLinkedin } from "react-icons/bi";
+
 export const COLORS = [
   "blue",
   "yellow",
@@ -38,69 +36,5 @@ export const GRADIENTS = [
   "linear-gradient(to right, #f12711, #f5af19)",
 ];
 
-const Profile = {
-  dateCreated: "sjhfskf",
 
-  lastUpdated: "sjfsbjds",
 
-  user: {
-    id: "jsgfbjsfk",
-    name: "skhfskfhsk",
-  },
-  links: {
-    socials: [
-      {
-        name: "sjfgsj",
-        link: "sjgfsjdfbj",
-      },
-    ],
-    other_links: [
-      {
-        name: "jsghdks",
-        link: "sdhjkshk",
-        icon: "jsbfks",
-      },
-    ],
-  },
-  settings: {
-    theme: "color",
-    seo: {
-      title: "skhsk",
-      description: "kshfdisk",
-      og_image: "djfhdkfns",
-    },
-  },
-};
-
-export const SOCIALS_TO_ADD = [
-  {
-    name: "Twitter",
-    icon: FaXTwitter,
-    color: "#1DA1F2",
-    baseUrl: "https://twitter.com/",
-  },
-  {
-    name: "Instagram",
-    icon: FaInstagram,
-    color: "#C13584",
-    baseUrl: "https://www.instagram.com/",
-  },
-  {
-    name: "Facebook",
-    icon: BiLogoFacebook,
-    color: "#1877F2",
-    baseUrl: "https://www.facebook.com/",
-  },
-  {
-    name: "LinkedIn",
-    icon: BiLogoLinkedin,
-    color: "#0A66C2",
-    baseUrl: "https://www.linkedin.com/in/",
-  },
-  {
-    name: "YouTube",
-    icon: AiOutlineYoutube,
-    color: "#FF0000",
-    baseUrl: "https://www.youtube.com/channel/",
-  },
-];

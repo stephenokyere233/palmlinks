@@ -8,7 +8,9 @@ const DashBoardLayout: FC<{ children: ReactNode }> = ({ children }) => {
       <section className="min-w-[350px]">
         <Sidebar />
       </section>
-      <section className="flex-1 px-6 overflow-y-scroll hide-scrollbar relative">{children}</section>
+      <section className="flex-1 px-6 overflow-y-scroll hide-scrollbar relative">
+        {children}
+      </section>
       <section className="min-w-[550px]">
         <Preview />
       </section>

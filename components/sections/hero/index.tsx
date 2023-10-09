@@ -16,9 +16,17 @@ const Hero = () => {
           <div className="flex gap-4">
             <div className="items-center gap-1 px-4 p-1 min-w-[400px] outline-none indent-2 rounded-lg w-full bg-accentLight flex">
               <h3 className="font-semibold">palm.link/</h3>
-              <input value={name} onChange={(e)=>setName(e.target.value)} type="text" className="py-2 w-full bg-accentLight outline-none" />
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                type="text"
+                className="py-2 w-full bg-accentLight outline-none"
+              />
             </div>
-            <Link href={`/auth?type=signup${name!==""?`&username=${name}`:""}` }className="">
+            <Link
+              href={`/auth?type=signup${name !== "" ? `&username=${name}` : ""}`}
+              className=""
+            >
               <button className="bg-primary w-max hover:text-zinc-700 hover:bg-accent active:scale-95 transition-all text-xl text-white p-3 font-medium px-6 rounded-lg">
                 Claim Link
               </button>

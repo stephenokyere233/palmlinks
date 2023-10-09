@@ -4,9 +4,34 @@ import { UserCredential } from "firebase/auth";
 import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import toast from "react-hot-toast";
 
-const createUserProfile = (firebaseUser: UserCredential["user"]) => {
+const createUserProfile = async (firebaseUser: UserCredential["user"]) => {
   const docRef = doc(firestoreDB, `${COLLECTIONS.PROFILES}/${firebaseUser.uid}`);
-  // await setDoc(docRef, data)
+  const newUserProfile = {
+    dateCreated: serverTimestamp(),
+    lastUpdated: serverTimestamp(),
+    profile_path:firebaseUser.displayName?.toLowerCase(),
+    uid: firebaseUser.uid,
+    user: {
+      id: firebaseUser.uid,
+      name: firebaseUser.displayName,
+      email: firebaseUser.email,
+      verified: firebaseUser.emailVerified,
+    },
+    links: {
+      socials: [],
+      other_links: [],
+    },
+    settings: {
+      theme: "default",
+      seo: {
+        title: firebaseUser.displayName,
+        description: null,
+        og_image: null,
+      },
+    },
+  };
+  await setDoc(docRef, newUserProfile);
+  toast.success("Your profile has been created!");
 };
 
 export async function onAuthenticationSuccess(firebaseUser: UserCredential["user"]) {
@@ -24,6 +49,7 @@ export async function onAuthenticationSuccess(firebaseUser: UserCredential["user
     setDoc(doc(firestoreDB, `${COLLECTIONS.USERS}/${firebaseUser.uid}`), newUser)
       .then(async () => {
         toast.success("Thank you for Joining PalmLinks!");
+        createUserProfile(firebaseUser);
       })
       .catch(() => toast.error("Couldn't add user"));
   } else {

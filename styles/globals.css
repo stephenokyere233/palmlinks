@@ -41,3 +41,41 @@
     transform: rotate(360deg);
   }
 } 
+
+
+.dash-loader {
+    position: relative;
+    width: 200px;
+    height: 200px;
+  }
+  .dash-loader::before , .dash-loader::after {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-color: #fff;
+    left: 50%;
+    top: 60%;
+    animation: rotate 1s ease-in infinite;
+}
+.dash-loader::after {
+  width: 40px;
+  height: 40px;
+  background-color:#6B46C1;
+  animation: rotate 1s ease-in infinite, moveY 1s ease-in infinite ;
+}
+
+@keyframes moveY {
+  0% , 100% {top: 10%}
+  45% , 55% {top: 59%}
+  60% {top: 40%}
+}
+@keyframes rotate {
+  0% { transform: translate(-50%, -100%) rotate(0deg) scale(1 , 1)}
+  25%{ transform: translate(-50%, 0%) rotate(180deg) scale(1 , 1)}
+  45% , 55%{ transform: translate(-50%, 100%) rotate(180deg) scale(3 , 0.5)}
+  60%{ transform: translate(-50%, 100%) rotate(180deg) scale(1, 1)}
+  75%{ transform: translate(-50%, 0%) rotate(270deg) scale(1 , 1)}
+  100%{ transform: translate(-50%, -100%) rotate(360deg) scale(1 , 1)}
+}
+    
