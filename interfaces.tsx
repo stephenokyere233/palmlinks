@@ -10,6 +10,7 @@ export interface StoreState extends StoreAction {
   userName: string;
   selectedSocial: any;
   showAddLinksModal: boolean;
+  userProfileImage: string;
 }
 export interface StoreAction {
   setShowSignUp: (showSignUp: StoreState["showSignUp"]) => void;
@@ -20,7 +21,7 @@ export interface StoreAction {
   setUserName: (userName: StoreState["userName"]) => void;
   setSelectedSocial: (selectedSocial: StoreState["selectedSocial"]) => void;
   setShowAddLinksModal: (showAddLinksModal: StoreState["showAddLinksModal"]) => void;
-  // addUserLink:any
+  setUserProfileImage: (userProfileImage: StoreState["userProfileImage"]) => void;
 }
 
 export interface ILink {
@@ -30,8 +31,8 @@ export interface ILink {
   baseUrl: string;
 }
 export interface Profile {
-  dateCreated: Timestamp | string;
-  lastUpdated: Timestamp | string;
+  dateCreated: Timestamp;
+  lastUpdated: Timestamp;
   uid: string;
   profile_path: string;
   user: {
@@ -39,6 +40,7 @@ export interface Profile {
     name: string;
     bio: string;
     email: string;
+    profile: string;
     verified: boolean;
   };
   links: {
@@ -49,8 +51,8 @@ export interface Profile {
     theme: "default";
     SEO: {
       title: string;
-      description: string | null;
-      og_image: string | null;
+      description: string ;
+      og_image?: string;
     };
   };
 }

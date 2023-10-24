@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useStore } from "@/store";
-import FAB from "@/components/FAB";
 import AddLinkModal from "@/components/modals/addLink.modal";
 import AddSocialModal from "@/components/modals/addSocial.modal";
 import { useUserProfile } from "@/hooks/useUserProfile.hook";
-import { firebaseAuth, firestoreDB } from "@/config/firebase.config";
-import toast from "react-hot-toast";
+import { firebaseAuth, firebaseStorage } from "@/config/firebase.config";
 import CircularLoaderIcon from "@/components/loader/circular";
-import { ILink, Profile } from "@/interfaces";
+import { ILink } from "@/interfaces";
 import { SOCIALS_TO_ADD } from "@/constants/socials";
 import { BiTrash } from "react-icons/bi";
 import { updateUserProfile } from "@/services/account.service";
 import { IoMdAdd } from "react-icons/io";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { toast } from "sonner";
 
 const Edit = () => {
   const userName = useStore((state) => state.userName);
   const setUserName = useStore((state) => state.setUserName);
+  const userProfileImage = useStore((state) => state.userProfileImage);
+  const setUserProfileImage = useStore((state) => state.setUserProfileImage);
   const userBio = useStore((state) => state.userBio);
   const setUserBio = useStore((state) => state.setUserBio);
   const showAddLinksModal = useStore((state) => state.showAddLinksModal);
@@ -27,6 +29,7 @@ const Edit = () => {
   const userLinks = useStore((state) => state.userLinks);
   const { userProfile, getProfile, setUserProfile } = useUserProfile();
   const [loading, setLoading] = useState<boolean>(false);
+  const [file, setFile] = useState(null);
 
   useEffect(() => {
     if (userProfile) {
@@ -52,6 +55,18 @@ const Edit = () => {
       };
       setUserProfile(updatedProfile);
       updateUserProfile(firebaseAuth.currentUser.uid, updatedProfile);
+    }
+  };
+
+  const uploadFile = async (file: any, name: string) => {
+    const storageRef = ref(firebaseStorage, `job-attachments/${name}`);
+    try {
+      const snapshot = await uploadBytes(storageRef, file);
+      const url = await getDownloadURL(snapshot.ref);
+      return url;
+    } catch (err) {
+      console.error(err);
+      toast.error("Error uploading file");
     }
   };
 
@@ -101,18 +116,27 @@ const Edit = () => {
                   {loading ? <CircularLoaderIcon color="black" /> : "Update Profile"}
                 </button>
               </div>
-              <div className="relative w-[150px] rounded-full  ">
-                <Image
-                  src="/profile.png"
-                  className="w-full rounded-full "
-                  width={300}
-                  height={300}
-                  alt="profile"
-                />
 
-                <p className="absolute z-10 bottom-2 left-2 bg-white border ">
-                  <IoMdAdd size={24} />
-                </p>
+              <div className="relative cursor-pointer w-[150px] rounded-full  ">
+                <input
+                  id="upload"
+                  className="hidden"
+                  type="file"
+                  accept="image/*"
+                  // onChange={onChange}
+                />
+                <label htmlFor="upload" className="cursor-pointer ">
+                  <Image
+                    src="/profile.png"
+                    className="w-full rounded-full transition-all active:scale-95 "
+                    width={300}
+                    height={300}
+                    alt="profile"
+                  />
+                  <p className="absolute z-10 bottom-2 left-2 bg-white border ">
+                    <IoMdAdd size={24} />
+                  </p>
+                </label>
               </div>
             </section>
           </div>
@@ -130,38 +154,47 @@ const Edit = () => {
             </div>
             <ul className="space-y-4 mt-4">
               {userLinks &&
-                userLinks.map((link) => {
-                  const data = SOCIALS_TO_ADD.filter(
-                    (item) => link.baseUrl === item.baseUrl
-                  );
-                  const icon = data[0].icon;
-                  return (
-                    <li
-                      key={link.baseUrl}
-                      className="flex bg-grayLight rounded-lg p-3 px-6 justify-between items-center  gap-2"
-                    >
-                      <div className="flex items-center gap-2">
-                        {icon}
-                        <h3>{data[0].name}</h3>
-                      </div>
-                      <div className="flex items-center gap-4">
-                        <p>{link.link}</p>
-                        <span onClick={() => removeLink(link)} className="cursor-pointer">
-                          <BiTrash color="red" />
-                        </span>
-                      </div>
-                    </li>
-                  );
-                })}
+                (userLinks.length > 0 ? (
+                  userLinks.map((link) => {
+                    const data = SOCIALS_TO_ADD.filter(
+                      (item) => link.baseUrl === item.baseUrl
+                    );
+                    const icon = data[0].icon;
+                    return (
+                      <li
+                        key={link.baseUrl}
+                        className="flex bg-grayLight rounded-lg p-3 px-6 justify-between items-center  gap-2"
+                      >
+                        <div className="flex items-center gap-2">
+                          {icon}
+                          <h3>{data[0].name}</h3>
+                        </div>
+                        <div className="flex items-center gap-4">
+                          <p>{link.link}</p>
+                          <span
+                            onClick={() => removeLink(link)}
+                            className="cursor-pointer"
+                          >
+                            <BiTrash color="red" />
+                          </span>
+                        </div>
+                      </li>
+                    );
+                  })
+                ) : (
+                  <div className="min-h-[200px] gap-2 flex flex-col justify-center items-center">
+                    <h3 className="text-xl">You have no Links yet!</h3>
+                  </div>
+                ))}
             </ul>
           </section>
-          <section className="m-4">
+          {/* <section className="m-4">
             <div className="flex gap-10 justify-between">
-              {/* <button className=" bg-accentLight hover:bg-accent active:scale-95 hover:text-white transition-all px-8 text-xl font-medium rounded-lg">
+              <button className=" bg-accentLight hover:bg-accent active:scale-95 hover:text-white transition-all px-8 text-xl font-medium rounded-lg">
                 + Add Header
-              </button> */}
+              </button>
             </div>
-          </section>
+          </section> */}
         </div>
         <AddLinkModal
           showModal={showAddLinksModal}

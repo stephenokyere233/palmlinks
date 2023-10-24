@@ -1,20 +1,24 @@
 import { firebaseAuth, firestoreDB } from "@/config/firebase.config";
 import { COLLECTIONS } from "@/constants/enums";
+import { Profile } from "@/interfaces";
 import { UserCredential } from "firebase/auth";
-import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
-import toast from "react-hot-toast";
+import { Timestamp, doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import { toast } from "sonner";
 
 const createUserProfile = async (firebaseUser: UserCredential["user"]) => {
+  if (!firebaseUser) return;
   const docRef = doc(firestoreDB, `${COLLECTIONS.PROFILES}/${firebaseUser.uid}`);
-  const newUserProfile = {
-    dateCreated: serverTimestamp(),
-    lastUpdated: serverTimestamp(),
-    profile_path:firebaseUser.displayName?.toLowerCase(),
+  const newUserProfile: Profile = {
+    dateCreated: serverTimestamp() as Timestamp,
+    lastUpdated: serverTimestamp() as Timestamp,
+    profile_path: firebaseUser.displayName?.split(" ")[0]?.toLowerCase() as string,
     uid: firebaseUser.uid,
     user: {
       id: firebaseUser.uid,
-      name: firebaseUser.displayName,
-      email: firebaseUser.email,
+      bio: "",
+      name: firebaseUser.displayName as string,
+      email: firebaseUser.email as string,
+      profile: firebaseUser.photoURL as string,
       verified: firebaseUser.emailVerified,
     },
     links: {
@@ -23,10 +27,10 @@ const createUserProfile = async (firebaseUser: UserCredential["user"]) => {
     },
     settings: {
       theme: "default",
-      seo: {
-        title: firebaseUser.displayName,
-        description: null,
-        og_image: null,
+      SEO: {
+        title: firebaseUser.displayName as string,
+        description: "",
+        og_image: "",
       },
     },
   };

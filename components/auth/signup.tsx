@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import AuthLayout from "../layouts/auth.layout";
 import { FcGoogle } from "react-icons/fc";
 import { useStore } from "@/store";
-import toast from "react-hot-toast";
 import { firebaseAuth } from "@/config/firebase.config";
 import { useRouter } from "next/router";
 import { onAuthenticationSuccess } from "@/services/auth.service";
@@ -16,6 +15,7 @@ import {
 } from "firebase/auth";
 import { doc } from "firebase/firestore";
 import { ERROR_MESSAGES, FIREBASE_AUTH_ERRORS } from "@/constants/errors";
+import { toast } from "sonner";
 const googleProvider = new GoogleAuthProvider();
 
 const Signup = () => {

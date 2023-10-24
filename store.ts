@@ -11,6 +11,9 @@ export const useStore = create<StoreState>((set) => ({
   setAuthUser: (authUser) => set(() => ({ authUser: authUser })),
   userBio: "",
   setUserBio: (userBio) => set(() => ({ userBio: userBio })),
+  userProfileImage: "",
+  setUserProfileImage: (userProfileImage) =>
+    set(() => ({ userProfileImage: userProfileImage })),
   userName: "",
   setUserName: (userName) => set(() => ({ userName: userName })),
   userLinks: [],

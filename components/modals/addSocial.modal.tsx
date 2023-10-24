@@ -5,9 +5,9 @@ import { useStore } from "@/store";
 import { firebaseAuth, firestoreDB } from "@/config/firebase.config";
 import { COLLECTIONS } from "@/constants/enums";
 import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
-import toast from "react-hot-toast";
 import { useUserProfile } from "@/hooks/useUserProfile.hook";
 import { ILink } from "@/interfaces";
+import { toast } from "sonner";
 
 const AddSocialModal = ({ data, showModal, onHideModal }: any) => {
   const [link, setLink] = useState<string>("");

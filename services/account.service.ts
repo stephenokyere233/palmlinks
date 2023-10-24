@@ -2,7 +2,7 @@ import { firestoreDB } from "@/config/firebase.config";
 import { COLLECTIONS } from "@/constants/enums";
 import { Profile } from "@/interfaces";
 import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 export const updateUserProfile = async (uid: string, updatedProfile: Profile) => {
   const docRef = doc(firestoreDB, `${COLLECTIONS.PROFILES}/${uid}`);

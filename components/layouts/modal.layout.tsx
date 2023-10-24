@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import React, { ReactNode } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 interface IModal {
   showModal: boolean;
